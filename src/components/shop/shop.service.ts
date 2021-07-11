@@ -32,9 +32,13 @@ export class ShopService {
   remove(id: number) {
     return this.shopRepository.delete(id);
   }
+
   async allProductsInShop(shopId: number) {
+    console.log(shopId);
     const shop = await this.shopRepository.findOne(shopId);
+    console.log(shop);
     const { items } = shop;
+    console.log(items);
     const result = await this.itemService.getForIds(items.map((i) => i.id));
 
     return result;
