@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ItemService } from '../item/item.service';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { UpdateShopDto } from './dto/update-shop.dto';
 import { Shop } from './entities/shop.entity';
@@ -10,6 +11,7 @@ export class ShopService {
   constructor(
     @InjectRepository(Shop)
     private shopRepository: Repository<Shop>,
+    private itemService: ItemService,
   ) {}
   create(createShopDto: CreateShopDto) {
     return this.shopRepository.save(createShopDto);
@@ -29,5 +31,12 @@ export class ShopService {
 
   remove(id: number) {
     return this.shopRepository.delete(id);
+  }
+  async allProductsInShop(shopId: number) {
+    const shop = await this.shopRepository.findOne(shopId);
+    const { items } = shop;
+    const result = await this.itemService.getForIds(items.map((i) => i.id));
+
+    return result;
   }
 }

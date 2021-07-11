@@ -31,4 +31,7 @@ export class ItemService {
   remove(id: number) {
     return this.itemsRepository.delete(id);
   }
+  getForIds(ids: number[]) {
+    return this.itemsRepository.findByIds(ids);
+  }
 }

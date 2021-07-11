@@ -15,6 +15,11 @@ import { UpdateShopDto } from './dto/update-shop.dto';
 export class ShopController {
   constructor(private readonly shopService: ShopService) {}
 
+  @Get(':shopId/items')
+  allProductsInShop(@Param('shopId') shopId: string) {
+    return this.shopService.allProductsInShop(+shopId);
+  }
+
   @Post()
   create(@Body() createShopDto: CreateShopDto) {
     return this.shopService.create(createShopDto);
