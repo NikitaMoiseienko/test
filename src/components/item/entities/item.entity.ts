@@ -6,16 +6,16 @@ export class Item {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   price: number;
 
   @Column({ default: false })
   isPreviouslyUsed: boolean;
 
-  @Column({ enum: ['black', 'white', 'pink', 'red'] })
+  @Column({ enum: ['black', 'white', 'pink', 'red'], nullable: true })
   color: string;
 
   @ManyToMany(() => Shop, (shop) => shop.items)
