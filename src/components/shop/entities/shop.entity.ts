@@ -12,13 +12,13 @@ export class Shop {
   @Column({ nullable: false, unique: true })
   name: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   address: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   phone: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   workTime: string;
 
   @Column({ default: false })

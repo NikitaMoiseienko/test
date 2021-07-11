@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { UpdateShopDto } from './dto/update-shop.dto';
+import { Shop } from './entities/shop.entity';
 
 @Injectable()
 export class ShopService {
+  constructor(
+    @InjectRepository(Shop)
+    private shopRepository: Repository<Shop>,
+  ) {}
   create(createShopDto: CreateShopDto) {
-    return 'This action adds a new shop';
+    return this.shopRepository.save(createShopDto);
   }
 
   findAll() {
-    return `This action returns all shop`;
+    return this.shopRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} shop`;
+    return this.shopRepository.findOne(id);
   }
 
   update(id: number, updateShopDto: UpdateShopDto) {
-    return `This action updates a #${id} shop`;
+    return this.shopRepository.update({ id }, updateShopDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} shop`;
+    return this.shopRepository.delete(id);
   }
 }
