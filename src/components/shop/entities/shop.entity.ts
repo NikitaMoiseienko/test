@@ -11,9 +11,7 @@ import {
 export class Shop {
   @ManyToMany(() => Item, (item) => item.shops)
   @JoinTable({
-    name: 'shop_item',
-    joinColumns: [{ name: 'itemId' }],
-    inverseJoinColumns: [{ name: 'shopId' }],
+    name: 'shop_items',
   })
   items: Item[];
 
