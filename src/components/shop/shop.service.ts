@@ -56,4 +56,14 @@ export class ShopService {
 
     return await this.shopRepository.save(shop);
   }
+
+  async removeItemsFromShop(shopId: number, itemIds: number[]) {
+    const shop = await this.shopRepository.findOne(shopId, {
+      relations: ['items'],
+    });
+
+    shop.items = shop.items.filter((item) => !itemIds.includes(item.id));
+
+    return await this.shopRepository.save(shop);
+  }
 }

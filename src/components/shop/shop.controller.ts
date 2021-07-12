@@ -34,6 +34,14 @@ export class ShopController {
     return this.shopService.create(createShopDto);
   }
 
+  @Delete(':shopId')
+  removeItemsFromShop(
+    @Param('shopId') shopId: string,
+    @Body() body: { items: number[] },
+  ) {
+    return this.shopService.removeItemsFromShop(+shopId, body.items);
+  }
+
   @Get()
   findAll() {
     return this.shopService.findAll();
