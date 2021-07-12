@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ItemService } from '../item/item.service';
@@ -11,10 +11,15 @@ export class ShopService {
   constructor(
     @InjectRepository(Shop)
     private shopRepository: Repository<Shop>,
+    @Inject(forwardRef(() => ItemService))
     private itemService: ItemService,
   ) {}
   create(createShopDto: CreateShopDto) {
     return this.shopRepository.save(createShopDto);
+  }
+
+  async saveMany(shops: Shop[]) {
+    return await this.shopRepository.save(shops);
   }
 
   findAll() {
@@ -39,6 +44,10 @@ export class ShopService {
     });
 
     return shop.items;
+  }
+
+  getByIds(shopIds: number[]) {
+    return this.shopRepository.findByIds(shopIds, { relations: ['items'] });
   }
 
   async addItemsToShop(shopId: number, itemIds: number[]) {

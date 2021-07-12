@@ -20,6 +20,14 @@ export class ItemController {
     return this.itemService.create(createItemDto);
   }
 
+  @Post(':itemId')
+  addItemToManyShops(
+    @Param('itemId') itemId: number,
+    @Body() body: { shops?: number[] },
+  ) {
+    return this.itemService.addItemToManyShops(itemId, body.shops);
+  }
+
   @Get()
   findAll() {
     return this.itemService.findAll();
