@@ -35,7 +35,9 @@ export class ShopService {
 
   async allProductsInShop(shopId: number) {
     console.log(shopId);
-    const shop = await this.shopRepository.findOne(shopId);
+    const shop = await this.shopRepository.findOne(shopId, {
+      relations: ['items'],
+    });
     console.log(shop);
     const { items } = shop;
     console.log(items);

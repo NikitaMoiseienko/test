@@ -1,9 +1,20 @@
 import { Item } from 'src/components/item/entities/item.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Shop {
   @ManyToMany(() => Item, (item) => item.shops)
+  @JoinTable({
+    name: 'shop_item',
+    joinColumns: [{ name: 'itemId' }],
+    inverseJoinColumns: [{ name: 'shopId' }],
+  })
   items: Item[];
 
   @PrimaryGeneratedColumn()
