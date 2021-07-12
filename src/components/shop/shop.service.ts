@@ -34,23 +34,26 @@ export class ShopService {
   }
 
   async allProductsInShop(shopId: number) {
-    console.log(shopId);
     const shop = await this.shopRepository.findOne(shopId, {
       relations: ['items'],
     });
-    console.log(shop);
-    const { items } = shop;
-    console.log(items);
-    const result = await this.itemService.getForIds(items.map((i) => i.id));
 
-    return result;
+    return shop.items;
   }
 
-  async addItemsToShop(shopId: number, itemsIdsArr: number[]) {
-    const shop = await this.shopRepository.findOne(shopId, {
-      relations: ['items'],
-    });
+  async addItemsToShop(shopId: number, itemIds: number[]) {
+    const [shop, items] = await Promise.all([
+      this.shopRepository.findOne(shopId, {
+        relations: ['items'],
+      }),
+      this.itemService.getForIds(itemIds),
+    ]);
 
-    return 'TODO';
+    console.log(shop);
+    console.log(items);
+
+    shop.items.push(...items);
+
+    return await this.shopRepository.save(shop);
   }
 }

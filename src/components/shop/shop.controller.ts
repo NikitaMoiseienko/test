@@ -23,12 +23,10 @@ export class ShopController {
   @Post(':shopId/items')
   addItemsToShop(
     @Param('shopId') shopId: string,
-    @Body() itemsIdsArr: string[],
+    @Body() body: { items: number[] },
   ) {
-    return this.shopService.addItemsToShop(
-      +shopId,
-      itemsIdsArr.map((i) => +i),
-    );
+    console.log(shopId, body.items);
+    return this.shopService.addItemsToShop(+shopId, body.items);
   }
 
   @Post()
