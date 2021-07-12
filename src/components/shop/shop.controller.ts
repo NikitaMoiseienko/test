@@ -20,6 +20,17 @@ export class ShopController {
     return this.shopService.allProductsInShop(+shopId);
   }
 
+  @Post(':shopId/items')
+  addItemsToShop(
+    @Param('shopId') shopId: string,
+    @Body() itemsIdsArr: string[],
+  ) {
+    return this.shopService.addItemsToShop(
+      +shopId,
+      itemsIdsArr.map((i) => +i),
+    );
+  }
+
   @Post()
   create(@Body() createShopDto: CreateShopDto) {
     return this.shopService.create(createShopDto);

@@ -45,4 +45,12 @@ export class ShopService {
 
     return result;
   }
+
+  async addItemsToShop(shopId: number, itemsIdsArr: number[]) {
+    const shop = await this.shopRepository.findOne(shopId, {
+      relations: ['items'],
+    });
+
+    return 'TODO';
+  }
 }
